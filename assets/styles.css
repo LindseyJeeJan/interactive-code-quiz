@@ -1,0 +1,55 @@
+:root {
+--accent: rgb(17,82,102	);
+--accent-dark: rgb(7,41,51)	;
+--light: #fff;
+}
+
+html, body{
+   margin: 5px;
+}
+
+header{
+    display: flex;
+    justify-content: space-between;
+}
+
+main{
+    margin: 5% auto;
+    max-width: 500px;
+
+}
+
+
+h1{
+ text-align: center;
+ font-size: 1.5rem;
+ margin: 5%;
+}
+
+.btn{
+    color: var(--light);
+    background-color: var(--accent);
+    border: 1px solid var(--accent);
+    font-size: 1.2rem;
+    line-height: 1;
+    padding: 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease-in;
+}
+
+.btn:hover, .btn:focus, btn:active{
+    background-color: var(--accent-dark);
+}
+
+.btn:focus{
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.text-center{
+    text-align: center;
+}
+
+.margin-bottom{
+    margin-bottom: 20px;
+} 

@@ -12,11 +12,20 @@
 
 <body>
     <header>
-        <a>View High Scores</a>
-        <h1>Coding Quiz Challenge</h1>
-        <div></div>
+        <a id="score-link">View High Scores</a>
+        <div class="timer-container">Time:
+            <span class="timer">0</span>
+        </div>
     </header>
-    <main></main>
+    <main>
+        <h1>Coding Quiz Challenge</h1>
+        <section>
+            <p class="text-center margin-bottom">Try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by ten seconds!</p>
+            <div class="text-center">
+                <button id="btn-start" class="btn">Start Quiz</button>
+            </div>
+        </section>
+    </main>
     <script src="./assets/main.js"></script>
 </body>
 
