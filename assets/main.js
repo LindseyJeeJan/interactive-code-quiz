@@ -19,36 +19,47 @@ var quizDone = false;
 var score = 0;
 var userInitials = "";
 var currSection = 0;
+
 var scores = [];
 
+// Get the scores from local storage
 function printScores() {
-   
+   var getScores = JSON.parse(localStorage.getItem("score"));
+   if (score !== null){
+       addScore(score);
+   }
 }
-// Store the scores in local storage
-
-// return error if initials empty, use example from class
 
 // Handle the quiz , showing the response, tallying the score and progressing the section
 quizSections.addEventListener("click", function(event){
    var elementClicked = event.target;
+
+   // Disable the non-selected buttons
    if (elementClicked.matches("button")){
        var allButtons = document.querySelectorAll("button");
         for (var i = 0; i < allButtons.length; i++) {
+            if ((allButtons[i]).classList.contains("correct")){
+                 allButtons[i].classList.add("correct-display");
+            }
             if (allButtons[i] != elementClicked){
-            allButtons[i].disabled = true;
+                 allButtons[i].disabled = true;
             }
         }
-       
+       // show the feedback on the item they choose
         if (elementClicked.classList.contains("correct")){
             score++;
             questionRightFeedback.setAttribute("style", "display: block;");
         } else {
             questionWrongFeedback.setAttribute("style", "display: block;");
         }
-        
+        // allow the feedback to show for a bit before hiding the feedback, enabling the buttons, and navigating the screen
         setTimeout(function() {
             for (var i = 0; i < allButtons.length; i++) {
+                 if ((allButtons[i]).classList.contains("correct-display")){
+                     allButtons[i].classList.remove("correct-display");
+                 }
                 allButtons[i].disabled = false;
+
             }
             currSection ++;
             gotoSection(currSection);
@@ -61,6 +72,7 @@ quizSections.addEventListener("click", function(event){
 
 });
 
+// Retrieves the buttons on the screen for the current quiz question
 function scoreSelection() {
     var pageButtons = document.querySelectorAll("sections[currSection] > buttons");
 }
@@ -68,19 +80,21 @@ function scoreSelection() {
 // Jump to a "page"
 function gotoSection(sectionNum){
     for (var i = 0; i < sections.length; i++ ){
+        // hide the questions except the current one
         sections[i].dataset.visibility = "hide";
         sections[sectionNum].dataset.visibility = "show";
     }  
     currSection = sectionNum;
+    // mark the end of the quiz
     if (currSection == ((sections.length)-2)){
         quizDone = true;
     }
 }
 
-// When the user clicks the View High Scores link, navigate to that page
+// When the user clicks the View High Scores link, navigate to the scoreboard
 scoresLink.addEventListener("click", function(event){
-     // Go to the scoreboard
     gotoSection((sections.length)-1);
+    printScores();
 });
 
 // When the user clicks the Start button, begin the quiz
@@ -88,9 +102,8 @@ btnStart.addEventListener("click", function(event){
    startQuiz();
 });
 
-// When the user clicks the Go Back button, return to the initial view
+// When the user clicks the Go Back button, return to the initial view/start
 btnBack.addEventListener("click", function(event){
-     // Go to the start page
      gotoSection(0);
      init();
 });
@@ -103,31 +116,44 @@ btnClear.addEventListener("click", function(event){
 // When the user clicks the Submit button, display High Scores
 btnSubmit.addEventListener("click", function(event){
     event.preventDefault();
+
     // Get initials from field
-    userInitials = initials.value;
-     // Go to the scoreboard
-    gotoSection((sections.length)-1);
-    // Write initials and score to the scoreboard
-    addScore(score);
-    //  Reset the form
-    var form = document.querySelector(".submit-initials");
-    form.reset();
+    userInitials = initials.value.trim();
+
+    // return error if initials empty, use example from class
+    if (userInitials === "") {
+        errorMessage.setAttribute("style", "display: block;");
+        return;
+    } else {
+        // Go to the scoreboard
+        gotoSection((sections.length)-1);
+        // Write initials and score to the scoreboard
+    // addScore(score);
+    
+        //  Reset the form
+        var form = document.querySelector(".submit-initials");
+        form.reset();
+
+        // Store the scores in local storage
+        localStorage.setItem("score", JSON.stringify(score));
+        printScores();   
+    }
    
 });
 
+// Create a new entry for the High Scores page
 function addScore(score){
     var newLi = document.createElement("li");
     newLi.innerHTML = `${userInitials} – ${score} / 5`;
     scoresList.appendChild(newLi);
 }
 
-// When user hits start button
+// When user hits start button, start the timer and the quiz
 function startQuiz() {
     init();
     startTimer();
     currSection ++;
     gotoSection(currSection);
-    scoreSelection();
 }
 
 // When quiz is over, either due to time running out or user completing it
@@ -168,9 +194,11 @@ function startTimer() {
   }, 1000);
 }
 
-
+// clear out the quiz and reset the timer
 function init() {
     timerCount = 70;
     timerDisplay.textContent = timerCount;
+    scoreSelection();
 }
+
 init();

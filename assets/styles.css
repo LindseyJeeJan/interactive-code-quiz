@@ -80,6 +80,7 @@ button[disabled], button[disabled]:hover, button[disabled]:focus{
     padding: 10px;
     cursor: pointer;
     transition: all 0.3s ease-in;
+    position: relative;
 }
 
 .btn:hover, .btn:focus, btn:active{
@@ -88,6 +89,13 @@ button[disabled], button[disabled]:hover, button[disabled]:focus{
 
 .btn:focus, input:focus{
     box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.correct-display::after{
+    display: inline-block;
+    content: '✅';
+    position: absolute;
+    right: -40px;
 }
 
 .feedback{
@@ -137,4 +145,13 @@ button[disabled], button[disabled]:hover, button[disabled]:focus{
 
 .final-score, .bold {
     font-weight: bold;
+}
+
+.error-message {
+    background-color: #ffb6c182;
+    margin-top: 10px;
+    color: #cc0000;
+    padding: 10px;
+    border-radius: 6px;
+
 }
