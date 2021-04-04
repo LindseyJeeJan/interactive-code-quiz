@@ -1,39 +1,76 @@
+/* Variables */
 :root {
 --accent: rgb(17,82,102	);
 --accent-dark: rgb(7,41,51)	;
 --light: #fff;
+--border-radius: 6px;
 }
-
+/* Element styles */
 html, body{
    margin: 5px;
+   background-color: #f0f0f0;
 }
 
 header{
     display: flex;
     justify-content: space-between;
+    padding: 10px;
 }
 
 main{
     margin: 5% auto;
     max-width: 500px;
-
 }
 
 
 h1{
- text-align: center;
- font-size: 1.5rem;
- margin: 5%;
+    text-align: center;
+    font-size: 1.5rem;
+    margin: 5%;
 }
 
+p{
+    line-height: 1.4;
+}
+
+a, a:hover, a:focus, a:active{
+    text-decoration: none;
+    color: var(--accent);
+    cursor: pointer;
+}
+
+input, .btn {
+    padding: 8px;
+    margin: 0 5px;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--accent); 
+    font-size: 1.2rem;
+    line-height: 1;
+}
+
+section .btn{
+    display: block;
+    margin: 5px 0;
+}
+
+section{
+    padding: 3%;
+    background-color: var(--light);
+}
+
+/* section[data-visibility=hide]{
+    display: none;
+}
+
+section[data-visibility=show]{
+    display: block;
+} */
+
+/* Class styles */
 .btn{
     color: var(--light);
     background-color: var(--accent);
-    border: 1px solid var(--accent);
-    font-size: 1.2rem;
-    line-height: 1;
     padding: 10px;
-    border-radius: 6px;
     cursor: pointer;
     transition: all 0.3s ease-in;
 }
@@ -42,14 +79,54 @@ h1{
     background-color: var(--accent-dark);
 }
 
-.btn:focus{
+.btn:focus, input:focus{
     box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.feedback{
+    border-top: 1px solid #999;
+    line-height: 2;
+    font-style: italic;
+    color: #999;
+    margin-top: 10px;
+}
+
+.submit-initials{
+    flex-wrap: nowrap;
+    display: flex;
+    align-items: center;
+}
+
+.scores-list{
+    
+    list-style: decimal;
+}
+
+.scores-list li{
+    margin: 1px 0 2px 30px;
+    padding: 5px;
+    background-color: rgb(65 210 255);
+    box-shadow: -2em 0 rgb(65 210 255);
+}
+
+.scores-list li::after{
+    display: block;
+    height: 0;
+    outline: 2px solid white;
 }
 
 .text-center{
     text-align: center;
 }
 
+.text-center .btn{
+    display: inline-block;
+}
+
 .margin-bottom{
     margin-bottom: 20px;
 } 
+
+.final-score {
+    font-weight: bold;
+}
