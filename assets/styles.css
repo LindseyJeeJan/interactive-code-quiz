@@ -67,9 +67,6 @@ section[data-visibility=show]{
 } 
 
 button[disabled], button[disabled]:hover, button[disabled]:focus{
-    background-color: #999;
-    color: #000;
-    border-color: #999;
     cursor: not-allowed;
 }
 
@@ -91,11 +88,15 @@ button[disabled], button[disabled]:hover, button[disabled]:focus{
     box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }
 
-.correct-display::after{
+.correct-display::after, .correct-display:not(.correct)::after{
     display: inline-block;
     content: '✅';
     position: absolute;
     right: -40px;
+}
+
+.correct-display:not(.correct)::after{
+ content: '❌';
 }
 
 .feedback{

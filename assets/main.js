@@ -44,10 +44,9 @@ quizSections.addEventListener("click", function(event){
    if (elementClicked.matches("button")){
        var allButtons = document.querySelectorAll("button");
         for (var i = 0; i < allButtons.length; i++) {
-            // Add arrow after to point out correct answer
-            if ((allButtons[i]).classList.contains("correct")){
-                 allButtons[i].classList.add("correct-display");
-            }
+            // Add feedback after to point out correct answer
+            allButtons[i].classList.add("correct-display");
+
             if (allButtons[i] != elementClicked){
                  allButtons[i].disabled = true;
             }
@@ -59,13 +58,12 @@ quizSections.addEventListener("click", function(event){
         } else {
             questionWrongFeedback.setAttribute("style", "display: block;");
         }
+        finalScore.textContent = score;
         // allow the feedback to show for a bit before hiding the feedback, enabling the buttons, and navigating the screen
         setTimeout(function() {
             for (var i = 0; i < allButtons.length; i++) {
-                // hide arrow that points out correct answer
-                 if ((allButtons[i]).classList.contains("correct-display")){
-                     allButtons[i].classList.remove("correct-display");
-                 }
+                // hide feedback that points out correct answer               
+                allButtons[i].classList.remove("correct-display");
                 //  enable buttons again
                 allButtons[i].disabled = false;
 
@@ -97,6 +95,7 @@ function gotoSection(sectionNum){
 scoresLink.addEventListener("click", function(event){
     gotoSection((sections.length)-1);
     renderScores();
+    quizDone = true;
 });
 
 // When the user clicks the Start button, begin the quiz
@@ -131,8 +130,10 @@ btnSubmit.addEventListener("click", function(event){
     if (userInitials === "") {
         errorMessage.setAttribute("style", "display: block;");
         return;
+    } else {
+       errorMessage.setAttribute("style", "display: none;"); 
     }
-    var userRecord = (`${userInitials} – ${score}`); 
+    var userRecord = (`${userInitials} – ${score} / 5`); 
     scores.push(userRecord);
 
     // Store the scores in local storage
@@ -146,14 +147,12 @@ btnSubmit.addEventListener("click", function(event){
     
     //  Reset the form
     var form = document.querySelector(".submit-initials");
-
-   
+    form.reset();
 });
 
 // When user hits start button, start the timer and the quiz
 function startQuiz() {
-    timerCount = 70;
-    timerDisplay.textContent = timerCount;
+    quizDone = false;
     startTimer();
     gotoSection(1);
 }
@@ -161,8 +160,6 @@ function startQuiz() {
 // When quiz is over, either due to time running out or user completing it
 function goToDonePage(msg){
     headerMsg.textContent = msg;
-    finalScore.textContent = score;
-    resetTimer();
 }
 
 // User completes quiz
@@ -179,26 +176,28 @@ function failQuiz() {
 }
 
 function resetTimer(){
-    timerCount = 0;
+    timerCount = 70;
     timerDisplay.textContent = timerCount;
 }
 
 // Timer function
 function startTimer() {
-  timer = setInterval(function() {
-    timerCount--;
-    timerDisplay.textContent = timerCount;
-    if (timerCount >= 0) {
-      if (quizDone && timerCount > 0) {
-        clearInterval(timer);
-        finishQuiz();
-      }
-    }
-    if (timerCount === 0) {
-      clearInterval(timer);
-      failQuiz();
-    }
-  }, 1000);
+    resetTimer()
+
+    timer = setInterval(function() {
+        timerCount--;
+        timerDisplay.textContent = timerCount;
+        if (timerCount >= 0) {
+            if (quizDone && timerCount > 0) {
+                clearInterval(timer);
+                finishQuiz();
+            }
+        }
+        if (timerCount === 0) {
+            clearInterval(timer);
+            failQuiz();
+        }
+    }, 1000);
 }
 
 // Reset the timer
