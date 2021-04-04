@@ -7,20 +7,63 @@ var initials = document.querySelector("#initials-input");
 var btnSubmit = document.querySelector("#btn-submit");
 var errorMessage = document.querySelector("#error-message");
 var finalScore = document.querySelector(".final-score");
-var scores = document.querySelector("#scores-list");
+var scoresList = document.querySelector("#scores-list");
 var sections = document.querySelectorAll("section");
+var quizSections = document.querySelector("div.quiz-section");
+var questionRightFeedback = document.querySelector("#feedback-correct"); 
+var questionWrongFeedback = document.querySelector("#feedback-wrong"); 
+var headerMsg = document.querySelector('.quiz-over-header');
 
 var timerCount = 70;
 var quizDone = false;
 var score = 0;
 var userInitials = "";
 var currSection = 0;
+var scores = [];
 
+function printScores() {
+   
+}
+// Store the scores in local storage
+
+// return error if initials empty, use example from class
+
+// Handle the quiz , showing the response, tallying the score and progressing the section
+quizSections.addEventListener("click", function(event){
+   var elementClicked = event.target;
+   if (elementClicked.matches("button")){
+        if (elementClicked.classList.contains("correct")){
+            score++;
+            questionRightFeedback.setAttribute("style", "display: block;");
+        } else {
+            questionWrongFeedback.setAttribute("style", "display: block;");
+        }
+        
+        setTimeout(function() {
+            currSection ++;
+            gotoSection(currSection);
+            questionRightFeedback.setAttribute("style", "display: none;");
+            questionWrongFeedback.setAttribute("style", "display: none;");
+        },500);
+   }
+    
+
+});
+
+function scoreSelection() {
+    var pageButtons = document.querySelectorAll("sections[currSection] > buttons");
+}
+
+// Jump to a "page"
 function gotoSection(sectionNum){
     for (var i = 0; i < sections.length; i++ ){
         sections[i].dataset.visibility = "hide";
         sections[sectionNum].dataset.visibility = "show";
     }  
+    currSection = sectionNum;
+    if (currSection == ((sections.length)-2)){
+        quizDone = true;
+    }
 }
 
 // When the user clicks the View High Scores link, navigate to that page
@@ -38,11 +81,12 @@ btnStart.addEventListener("click", function(event){
 btnBack.addEventListener("click", function(event){
      // Go to the start page
      gotoSection(0);
+     init();
 });
 
 // When the user clicks the Clear button, clear High Schores
 btnClear.addEventListener("click", function(event){
-    scores.innerHTML = "";
+    scoresList.innerHTML = "";
 });
 
 // When the user clicks the Submit button, display High Scores
@@ -53,41 +97,49 @@ btnSubmit.addEventListener("click", function(event){
      // Go to the scoreboard
     gotoSection((sections.length)-1);
     // Write initials and score to the scoreboard
-    var newLi = document.createElement("li");
-    newLi.innerHTML = `${userInitials} – ${score} / 5`;
-    scores.appendChild(newLi);
+    addScore(score);
     //  Reset the form
     var form = document.querySelector(".submit-initials");
     form.reset();
    
 });
 
+function addScore(score){
+    var newLi = document.createElement("li");
+    newLi.innerHTML = `${userInitials} – ${score} / 5`;
+    scoresList.appendChild(newLi);
+}
+
+// When user hits start button
 function startQuiz() {
-    timerCount = 70;
-    timerDisplay.textContent = timerCount;
+    init();
     startTimer();
+    currSection ++;
+    gotoSection(currSection);
+    scoreSelection();
 }
 
+// When quiz is over, either due to time running out or user completing it
 function goToDonePage(msg){
-     for (var i = 0; i < sections.length; i++ ){
-        sections[i].dataset.visibility = "hide";
-        sections[(sections.length)-1].dataset.visibility = "show";
-    } 
-    var headerMsg = document.querySelector('h1');
-    headerMsg.innerText = msg;
-    finalScore.innerText = score;
+    gotoSection((sections.length)-2);
+    headerMsg.textContent = msg;
+    finalScore.textContent = score;
 }
 
+// User completes quiz
 function finishQuiz() {
     quizDone = true;
     goToDonePage("Quiz Complete 🎉");
 }
 
+// Time has run out
 function failQuiz() {
    quizDone = true;
    goToDonePage("Out of Time ⏰");
+   timer = 0;
 }
 
+// Timer function
 function startTimer() {
   timer = setInterval(function() {
     timerCount--;
@@ -104,3 +156,10 @@ function startTimer() {
     }
   }, 1000);
 }
+
+
+function init() {
+    timerCount = 70;
+    timerDisplay.textContent = timerCount;
+}
+init();

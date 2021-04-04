@@ -25,44 +25,46 @@
                 <button id="btn-start" class="btn">Start Quiz</button>
             </div>
         </section>
+        <div class="quiz-section">
+            <section class="quiz" data-visibility="hide">
+                <h1>Commonly used data types DO NOT include:</h1>
+                <button class="btn">1. Strings</button>
+                <button class="btn">2. Booleans</button>
+                <button class="btn correct">3. Alerts</button>
+                <button class="btn">4. Numbers</button>
+            </section>
+            <section class="quiz" data-visibility="hide">
+                <h1>The condition in an if / else statement is enclosed within _____.</h1>
+                <button class="btn">1. Quotes</button>
+                <button class="btn correct">2. Curly brackets</button>
+                <button class="btn">3. Parentheses</button>
+                <button class="btn">4. Square brackets</button>
+            </section>
+            <section class="quiz" data-visibility="hide">
+                <h1>Arrays in JavaScript can be used to store _____.</h1>
+                <button class="btn">1.Numbers and strings</button>
+                <button class="btn">2.Other arrays</button>
+                <button class="btn">3. Booleans</button>
+                <button class="btn correct">4. All of the above</button>
+            </section>
+            <section class="quiz" data-visibility="hide">
+                <h1>String values must be enclosed within _____ when being assigned to variables.</h1>
+                <button class="btn">1. Commas</button>
+                <button class="btn">2. Curly brackets</button>
+                <button class="btn correct">3. Quotes</button>
+                <button class="btn">4. Parentheses</button>
+            </section>
+            <section class="quiz" data-visibility="hide">
+                <h1>A very useful tool used during development and debugging for printing content to the debugger is:</h1>
+                <button class="btn">1. JavaScript</button>
+                <button class="btn">2. Terminal / bash</button>
+                <button class="btn">3. For loops</button>
+                <button class="btn correct">4. Console.log</button>
+            </section>
+        </div>
         <section data-visibility="hide">
-            <h1>Commonly used data types DO NOT include:</h1>
-            <button class="btn">1. Strings</button>
-            <button class="btn">2. Booleans</button>
-            <button class="btn correct">3. Alerts</button>
-            <button class="btn">4. Numbers</button>
-        </section>
-        <section data-visibility="hide">
-            <h1>The condition in an if / else statement is enclosed within _____.</h1>
-            <button class="btn">1. Quotes</button>
-            <button class="btn correct">2. Curly brackets</button>
-            <button class="btn">3. Parentheses</button>
-            <button class="btn">4. Square brackets</button>
-        </section>
-        <section data-visibility="hide">
-            <h1>Arrays in JavaScript can be used to store _____.</h1>
-            <button class="btn">1.Numbers and strings</button>
-            <button class="btn">2.Other arrays</button>
-            <button class="btn">3. Booleans</button>
-            <button class="btn correct">4. All of the above</button>
-        </section>
-        <section data-visibility="hide">
-            <h1>String values must be enclosed within _____ when being assigned to variables.</h1>
-            <button class="btn">1. Commas</button>
-            <button class="btn">2. Curly brackets</button>
-            <button class="btn correct">3. Quotes</button>
-            <button class="btn">4. Parentheses</button>
-        </section>
-        <section data-visibility="hide">
-            <h1>A very useful tool used during development and debugging for printing content to the debugger is:</h1>
-            <button class="btn">1. JavaScript</button>
-            <button class="btn">2. Terminal / bash</button>
-            <button class="btn">3. For loops</button>
-            <button class="btn correct">4. Console.log</button>
-        </section>
-        <section data-visibility="hide">
-            <h1></h1>
-            <p class="margin-bottom">Your final score is <span class="final-score"></span></p>
+            <h1 class="quiz-over-header">Quiz Complete 🎉</h1>
+            <p class="margin-bottom">Your final score is <span class="final-score"></span><span class="bold"> / 5</span></p>
 
             <form class="submit-initials">
                 <label for="initials-input">Enter initials</label>
