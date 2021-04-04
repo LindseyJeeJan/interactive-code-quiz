@@ -23,12 +23,17 @@ var currSection = 0;
 var scores = [];
 
 // Get the scores from local storage
-function printScores() {
-   var score = JSON.parse(localStorage.getItem("score"));
-
-   if (score !== null){
-       addScore(score);
-   }
+function renderScores() {
+    // Clear score list
+    scoresList.innerHTML = "";
+   
+      // Create a new list item for each score
+    for (var i = 0; i < scores.length; i++) {
+        var score = scores[i];
+        var newLi = document.createElement("li");
+        newLi.textContent = score;
+        scoresList.appendChild(newLi);
+    }
 }
 
 // Handle the quiz , showing the response, tallying the score and progressing the section
@@ -70,18 +75,9 @@ quizSections.addEventListener("click", function(event){
             // hide feedback again
             questionRightFeedback.setAttribute("style", "display: none;");
             questionWrongFeedback.setAttribute("style", "display: none;");    
-        },900);
-        
+        },900);    
    }
-    
-
 });
-
-// Retrieves the buttons on the screen for the current quiz question
-function scoreSelection() {
-    
-   // var pageButtons = document.querySelectorAll("sections[currSection] > buttons");
-}
 
 // Jump to a "page"
 function gotoSection(sectionNum){
@@ -91,7 +87,6 @@ function gotoSection(sectionNum){
         sections[sectionNum].dataset.visibility = "show";
     }  
     currSection = sectionNum;
-    console.log("currSection", currSection)
     // mark the end of the quiz
     if (currSection == ((sections.length)-2)){
         quizDone = true;
@@ -101,7 +96,7 @@ function gotoSection(sectionNum){
 // When the user clicks the View High Scores link, navigate to the scoreboard
 scoresLink.addEventListener("click", function(event){
     gotoSection((sections.length)-1);
-    printScores();
+    renderScores();
 });
 
 // When the user clicks the Start button, begin the quiz
@@ -115,9 +110,14 @@ btnBack.addEventListener("click", function(event){
      currSection = 0;
 });
 
-// When the user clicks the Clear button, clear High Schores
+// When the user clicks the Clear button, clear High Scores
 btnClear.addEventListener("click", function(event){
+    //empty the DOM ul list
     scoresList.innerHTML = "";
+    // empty the array
+    scores = [];
+    // push empty array to storage
+    localStorage.setItem("scores", JSON.stringify(scores));
 });
 
 // When the user clicks the Submit button, display High Scores
@@ -131,29 +131,24 @@ btnSubmit.addEventListener("click", function(event){
     if (userInitials === "") {
         errorMessage.setAttribute("style", "display: block;");
         return;
-    } else {
-        // Go to the scoreboard
-        gotoSection((sections.length)-1);
-        // Write initials and score to the scoreboard
-    // addScore(score);
-    
-        //  Reset the form
-        var form = document.querySelector(".submit-initials");
-        form.reset();
-
-        // Store the scores in local storage
-        localStorage.setItem("score", JSON.stringify(score));
-        printScores();   
     }
+    var userRecord = (`${userInitials} – ${score}`); 
+    scores.push(userRecord);
+
+    // Store the scores in local storage
+    localStorage.setItem("scores", JSON.stringify(scores));
+
+    // print the scores to the screen
+    renderScores();   
+    
+    // Go to the scoreboard
+    gotoSection((sections.length)-1);
+    
+    //  Reset the form
+    var form = document.querySelector(".submit-initials");
+
    
 });
-
-// Create a new entry for the High Scores page
-function addScore(score){
-    var newLi = document.createElement("li");
-    newLi.innerHTML = `${userInitials} – ${score} / 5`;
-    scoresList.appendChild(newLi);
-}
 
 // When user hits start button, start the timer and the quiz
 function startQuiz() {
@@ -206,10 +201,19 @@ function startTimer() {
   }, 1000);
 }
 
-// clear out the quiz and reset the timer
+// Reset the timer
 function init() {
     resetTimer();
-    scoreSelection();
+
+    // get scores from local storage
+   var storedScores = JSON.parse(localStorage.getItem("scores"));
+
+   // add scores from storage to the array
+    if (storedScores !== null){
+        scores = storedScores;
+    }
+    // write the scores to the list on the high scores page
+    renderScores();
 }
 
 init();
