@@ -14,14 +14,19 @@ var timerCount = 70;
 var quizDone = false;
 var score = 0;
 var userInitials = "";
+var currSection = 0;
 
+function gotoSection(sectionNum){
+    for (var i = 0; i < sections.length; i++ ){
+        sections[i].dataset.visibility = "hide";
+        sections[sectionNum].dataset.visibility = "show";
+    }  
+}
 
 // When the user clicks the View High Scores link, navigate to that page
 scoresLink.addEventListener("click", function(event){
-    for (var i = 0; i < sections.length; i++ ){
-        sections[i].dataset.visibility = "hide";
-        sections[(sections.length)-1].dataset.visibility = "show";
-    }  
+     // Go to the scoreboard
+    gotoSection((sections.length)-1);
 });
 
 // When the user clicks the Start button, begin the quiz
@@ -31,10 +36,8 @@ btnStart.addEventListener("click", function(event){
 
 // When the user clicks the Go Back button, return to the initial view
 btnBack.addEventListener("click", function(event){
-   for (var i = 0; i < sections.length; i++ ){
-        sections[i].dataset.visibility = "hide";
-        sections[0].dataset.visibility = "show";
-    }  
+     // Go to the start page
+     gotoSection(0);
 });
 
 // When the user clicks the Clear button, clear High Schores
@@ -44,17 +47,19 @@ btnClear.addEventListener("click", function(event){
 
 // When the user clicks the Submit button, display High Scores
 btnSubmit.addEventListener("click", function(event){
-   event.preventDefault();
+    event.preventDefault();
+    // Get initials from field
     userInitials = initials.value;
-     for (var i = 0; i < sections.length; i++ ){
-        sections[i].dataset.visibility = "hide";
-        sections[(sections.length)-1].dataset.visibility = "show";
-    }  
+     // Go to the scoreboard
+    gotoSection((sections.length)-1);
+    // Write initials and score to the scoreboard
+    var newLi = document.createElement("li");
+    newLi.innerHTML = `${userInitials} – ${score} / 5`;
+    scores.appendChild(newLi);
+    //  Reset the form
     var form = document.querySelector(".submit-initials");
     form.reset();
-    var newLi = document.createElement("li");
-    newLi.innerHTML = `${userInitials} – ${score} / 5`
-    scores.appendChild(newLi);
+   
 });
 
 function startQuiz() {
