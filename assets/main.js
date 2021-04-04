@@ -38,6 +38,7 @@ quizSections.addEventListener("click", function(event){
    if (elementClicked.matches("button")){
        var allButtons = document.querySelectorAll("button");
         for (var i = 0; i < allButtons.length; i++) {
+            // Add arrow after to point out correct answer
             if ((allButtons[i]).classList.contains("correct")){
                  allButtons[i].classList.add("correct-display");
             }
@@ -55,14 +56,17 @@ quizSections.addEventListener("click", function(event){
         // allow the feedback to show for a bit before hiding the feedback, enabling the buttons, and navigating the screen
         setTimeout(function() {
             for (var i = 0; i < allButtons.length; i++) {
+                // hide arrow that points out correct answer
                  if ((allButtons[i]).classList.contains("correct-display")){
                      allButtons[i].classList.remove("correct-display");
                  }
+                //  enable buttons again
                 allButtons[i].disabled = false;
 
             }
             currSection ++;
             gotoSection(currSection);
+            // hide feedback again
             questionRightFeedback.setAttribute("style", "display: none;");
             questionWrongFeedback.setAttribute("style", "display: none;");    
         },900);
