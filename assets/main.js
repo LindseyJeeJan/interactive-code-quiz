@@ -24,7 +24,8 @@ var scores = [];
 
 // Get the scores from local storage
 function printScores() {
-   var getScores = JSON.parse(localStorage.getItem("score"));
+   var score = JSON.parse(localStorage.getItem("score"));
+
    if (score !== null){
        addScore(score);
    }
@@ -78,7 +79,8 @@ quizSections.addEventListener("click", function(event){
 
 // Retrieves the buttons on the screen for the current quiz question
 function scoreSelection() {
-    var pageButtons = document.querySelectorAll("sections[currSection] > buttons");
+    
+   // var pageButtons = document.querySelectorAll("sections[currSection] > buttons");
 }
 
 // Jump to a "page"
@@ -89,6 +91,7 @@ function gotoSection(sectionNum){
         sections[sectionNum].dataset.visibility = "show";
     }  
     currSection = sectionNum;
+    console.log("currSection", currSection)
     // mark the end of the quiz
     if (currSection == ((sections.length)-2)){
         quizDone = true;
@@ -109,7 +112,7 @@ btnStart.addEventListener("click", function(event){
 // When the user clicks the Go Back button, return to the initial view/start
 btnBack.addEventListener("click", function(event){
      gotoSection(0);
-     init();
+     currSection = 0;
 });
 
 // When the user clicks the Clear button, clear High Schores
@@ -154,17 +157,17 @@ function addScore(score){
 
 // When user hits start button, start the timer and the quiz
 function startQuiz() {
-    init();
+    timerCount = 70;
+    timerDisplay.textContent = timerCount;
     startTimer();
-    currSection ++;
-    gotoSection(currSection);
+    gotoSection(1);
 }
 
 // When quiz is over, either due to time running out or user completing it
 function goToDonePage(msg){
-    gotoSection((sections.length)-2);
     headerMsg.textContent = msg;
     finalScore.textContent = score;
+    resetTimer();
 }
 
 // User completes quiz
@@ -176,8 +179,13 @@ function finishQuiz() {
 // Time has run out
 function failQuiz() {
    quizDone = true;
+   gotoSection((sections.length)-2);
    goToDonePage("Out of Time ⏰");
-   timer = 0;
+}
+
+function resetTimer(){
+    timerCount = 0;
+    timerDisplay.textContent = timerCount;
 }
 
 // Timer function
@@ -200,8 +208,7 @@ function startTimer() {
 
 // clear out the quiz and reset the timer
 function init() {
-    timerCount = 70;
-    timerDisplay.textContent = timerCount;
+    resetTimer();
     scoreSelection();
 }
 
