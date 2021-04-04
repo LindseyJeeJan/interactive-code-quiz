@@ -66,6 +66,13 @@ section[data-visibility=show]{
     display: block;
 } 
 
+button[disabled], button[disabled]:hover, button[disabled]:focus{
+    background-color: #999;
+    color: #000;
+    border-color: #999;
+    cursor: not-allowed;
+}
+
 /* Class styles */
 .btn{
     color: var(--light);
@@ -84,10 +91,10 @@ section[data-visibility=show]{
 }
 
 .feedback{
-    border-top: 1px solid #666;
+    border-top: 1px solid #333;
     line-height: 2;
     font-style: italic;
-    color: #666;
+    color: #333;
     margin-top: 10px;
     font-weight: bold;
 }

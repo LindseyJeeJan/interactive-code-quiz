@@ -32,6 +32,13 @@ function printScores() {
 quizSections.addEventListener("click", function(event){
    var elementClicked = event.target;
    if (elementClicked.matches("button")){
+       var allButtons = document.querySelectorAll("button");
+        for (var i = 0; i < allButtons.length; i++) {
+            if (allButtons[i] != elementClicked){
+            allButtons[i].disabled = true;
+            }
+        }
+       
         if (elementClicked.classList.contains("correct")){
             score++;
             questionRightFeedback.setAttribute("style", "display: block;");
@@ -40,11 +47,15 @@ quizSections.addEventListener("click", function(event){
         }
         
         setTimeout(function() {
+            for (var i = 0; i < allButtons.length; i++) {
+                allButtons[i].disabled = false;
+            }
             currSection ++;
             gotoSection(currSection);
             questionRightFeedback.setAttribute("style", "display: none;");
-            questionWrongFeedback.setAttribute("style", "display: none;");
-        },500);
+            questionWrongFeedback.setAttribute("style", "display: none;");    
+        },900);
+        
    }
     
 
