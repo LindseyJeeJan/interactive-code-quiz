@@ -10,8 +10,6 @@ var finalScore = document.querySelector(".final-score");
 var scoresList = document.querySelector("#scores-list");
 var sections = document.querySelectorAll("section");
 var quizSections = document.querySelector("div.quiz-section");
-var questionRightFeedback = document.querySelector("#feedback-correct"); 
-var questionWrongFeedback = document.querySelector("#feedback-wrong"); 
 var headerMsg = document.querySelector('.quiz-over-header');
 
 var timerCount = 70;
@@ -45,7 +43,7 @@ quizSections.addEventListener("click", function(event){
        var allButtons = document.querySelectorAll("button");
         for (var i = 0; i < allButtons.length; i++) {
             // Add feedback after to point out correct answer
-            allButtons[i].classList.add("correct-display");
+            elementClicked.classList.add("correct-display");
 
             if (allButtons[i] != elementClicked){
                  allButtons[i].disabled = true;
@@ -54,16 +52,13 @@ quizSections.addEventListener("click", function(event){
        // show the feedback on the item they choose
         if (elementClicked.classList.contains("correct")){
             score++;
-            questionRightFeedback.setAttribute("style", "display: block;");
-        } else {
-            questionWrongFeedback.setAttribute("style", "display: block;");
-        }
+        } 
         finalScore.textContent = score;
         // allow the feedback to show for a bit before hiding the feedback, enabling the buttons, and navigating the screen
         setTimeout(function() {
             for (var i = 0; i < allButtons.length; i++) {
                 // hide feedback that points out correct answer               
-                allButtons[i].classList.remove("correct-display");
+                elementClicked.classList.remove("correct-display");
                 //  enable buttons again
                 allButtons[i].disabled = false;
 
@@ -71,8 +66,6 @@ quizSections.addEventListener("click", function(event){
             currSection ++;
             gotoSection(currSection);
             // hide feedback again
-            questionRightFeedback.setAttribute("style", "display: none;");
-            questionWrongFeedback.setAttribute("style", "display: none;");    
         },900);    
    }
 });

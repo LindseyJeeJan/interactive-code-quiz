@@ -90,13 +90,16 @@ button[disabled], button[disabled]:hover, button[disabled]:focus{
 
 .correct-display::after, .correct-display:not(.correct)::after{
     display: inline-block;
-    content: '✅';
+    content: 'Correct ✅';
     position: absolute;
-    right: -40px;
+    right: -105px;
+    font-weight: bold;
+    color: #000;
 }
 
 .correct-display:not(.correct)::after{
- content: '❌';
+ content: 'Wrong ❌';
+ font-weight: bold;
 }
 
 .feedback{
