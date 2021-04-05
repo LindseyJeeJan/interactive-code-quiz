@@ -4,7 +4,9 @@
 --accent-dark: rgb(7,41,51)	;
 --light: #fff;
 --border-radius: 6px;
+--highlight: #ddd;
 }
+
 /* Element styles */
 html, body{
    margin: 5px;
@@ -19,14 +21,14 @@ header{
 
 main{
     margin: 5% auto;
-    max-width: 500px;
+    max-width: 550px;
 }
 
 
 h1{
-    text-align: center;
+    text-align: left;
     font-size: 1.5rem;
-    margin: 5%;
+    margin-bottom: 5%;
 }
 
 p{
@@ -54,7 +56,7 @@ section .btn{
 }
 
 section{
-    padding: 3%;
+    padding: 5%;
     background-color: var(--light);
 }
 
@@ -70,6 +72,12 @@ button[disabled], button[disabled]:hover, button[disabled]:focus{
     cursor: not-allowed;
 }
 
+/* ID styles */
+#initials-input {
+    min-width: 0;
+    flex-grow: 2;
+}
+
 /* Class styles */
 .btn{
     color: var(--light);
@@ -78,6 +86,7 @@ button[disabled], button[disabled]:hover, button[disabled]:focus{
     cursor: pointer;
     transition: all 0.3s ease-in;
     position: relative;
+    font-size: 1rem;
 }
 
 .btn:hover, .btn:focus, btn:active{
@@ -88,27 +97,26 @@ button[disabled], button[disabled]:hover, button[disabled]:focus{
     box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }
 
-.correct-display::after, .correct-display:not(.correct)::after{
+.quiz .btn:before{
+    content: '⬜️';
+    padding-right: 15px;
+}
+
+.quiz .btn.btn-selected:before {
+    content: '🔳';
+    padding-right: 15px;
+}
+
+.btn-selected::after, .btn-selected:not(.correct)::after{
     display: inline-block;
     content: 'Correct ✅';
     position: absolute;
-    right: -105px;
-    font-weight: bold;
-    color: #000;
-}
-
-.correct-display:not(.correct)::after{
- content: 'Wrong ❌';
- font-weight: bold;
-}
-
-.feedback{
-    border-top: 1px solid #333;
-    line-height: 2;
-    font-style: italic;
+    right: -90px;
     color: #333;
-    margin-top: 10px;
-    font-weight: bold;
+}
+
+.btn-selected:not(.correct)::after{
+ content: 'Wrong ❌';
 }
 
 .submit-initials{
@@ -118,21 +126,24 @@ button[disabled], button[disabled]:hover, button[disabled]:focus{
 }
 
 .scores-list{
-    
     list-style: decimal;
+    margin-bottom: 10px;
 }
 
 .scores-list li{
-    margin: 1px 0 2px 30px;
+    margin: 0 0 0 30px; 
     padding: 5px;
-    background-color: rgb(65 210 255);
-    box-shadow: -2em 0 rgb(65 210 255);
 }
 
 .scores-list li::after{
     display: block;
     height: 0;
     outline: 2px solid white;
+}
+
+.scores-list li:nth-child(odd){
+    background-color: var(--highlight);
+    box-shadow: -2em 0 var(--highlight);
 }
 
 .text-center{
@@ -151,11 +162,29 @@ button[disabled], button[disabled]:hover, button[disabled]:focus{
     font-weight: bold;
 }
 
+.legend {
+    font-size: 85%;
+    color: #999;
+    margin-bottom: 10px;
+}
+
+.red {
+    color: #cc0000;
+}
+
 .error-message {
     background-color: #ffb6c182;
     margin-top: 10px;
     color: #cc0000;
     padding: 10px;
     border-radius: 6px;
+    line-height: 1.1;
+    position: relative;
+    padding-left: 35px;
+}
 
+.error-message::before{
+    content: '🚫';
+    position: absolute;
+    left: 6px;
 }

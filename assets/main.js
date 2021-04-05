@@ -43,8 +43,7 @@ quizSections.addEventListener("click", function(event){
        var allButtons = document.querySelectorAll("button");
         for (var i = 0; i < allButtons.length; i++) {
             // Add feedback after to point out correct answer
-            elementClicked.classList.add("correct-display");
-
+            elementClicked.classList.add("btn-selected");
             if (allButtons[i] != elementClicked){
                  allButtons[i].disabled = true;
             }
@@ -58,10 +57,9 @@ quizSections.addEventListener("click", function(event){
         setTimeout(function() {
             for (var i = 0; i < allButtons.length; i++) {
                 // hide feedback that points out correct answer               
-                elementClicked.classList.remove("correct-display");
+                elementClicked.classList.remove("btn-selected");
                 //  enable buttons again
                 allButtons[i].disabled = false;
-
             }
             currSection ++;
             gotoSection(currSection);
@@ -123,9 +121,7 @@ btnSubmit.addEventListener("click", function(event){
     if (userInitials === "") {
         errorMessage.setAttribute("style", "display: block;");
         return;
-    } else {
-       errorMessage.setAttribute("style", "display: none;"); 
-    }
+    } 
     var userRecord = (`${userInitials} – ${score} / 5`); 
     scores.push(userRecord);
 
@@ -137,7 +133,7 @@ btnSubmit.addEventListener("click", function(event){
     
     // Go to the scoreboard
     gotoSection((sections.length)-1);
-    
+    errorMessage.setAttribute("style", "display: none;"); 
     //  Reset the form
     var form = document.querySelector(".submit-initials");
     form.reset();
