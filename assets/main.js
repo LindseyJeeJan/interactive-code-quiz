@@ -51,7 +51,10 @@ quizSections.addEventListener("click", function(event){
        // show the feedback on the item they choose
         if (elementClicked.classList.contains("correct")){
             score++;
-        } 
+        } else {
+            timerCount = timerCount - 10;
+            timerDisplay.textContent = timerCount;
+        }
         finalScore.textContent = score;
         // allow the feedback to show for a bit before hiding the feedback, enabling the buttons, and navigating the screen
         setTimeout(function() {
