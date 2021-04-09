@@ -1,7 +1,7 @@
 /* Variables */
 :root {
---accent: rgb(17,82,102	);
---accent-dark: rgb(7,41,51)	;
+--accent: rgb(71, 17, 102);
+--accent-dark: rgb(39, 7, 51)	;
 --light: #fff;
 --border-radius: 6px;
 --highlight: #ddd;
